@@ -1,0 +1,105 @@
+<template>
+  <div
+    class="post row m-3 "
+    v-for="p in post"
+    :key="p.id"
+  >
+    <div class="card m-3 col-md-12 d-flex" >
+      <div class="row">
+        <div class="col-md-12 flex-row">
+          <h2><img :src="p.creator?.picture" alt="creator picture" class="selectable rounded-pill h-25 w-25 m-2" @click="linkProfile(p.creatorId)">
+           {{p.creator?.name}} 
+        <span v-if="p.creator.graduated">
+        <span class="mdi mdi-school"></span>
+        </span>
+        </h2>
+        </div>
+        <div class="col-md-12 p-0">
+             <div class="text-secondary ps-5"> {{p.createdAt}}</div>
+          <img :src="p.imgUrl" alt="" class="d-flex flex-row w-50 ms-3 mb-3">
+          <div class="p-3">
+          {{p.body}}
+          </div>
+            <div class=" d-flex m-2 p-2 align-items-center">
+            <p class="m-2">{{p.likeIds?.length}}</p>
+            <button class="btn btn-outline-primary mdi mdi-heart selectable" @click="like(p.id)" v-if="!p.likeIds.includes(account.id)"></button>
+            <button class="btn btn-danger mdi mdi-heart selectable" @click="like(p.id)" v-if="p.likeIds.includes(account.id)"></button>
+            <button class="ms-2 btn btn-outline-primary mdi mdi-trash selectable" v-if="p.creatorId == account.id" @click="deletePost(p.id)">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</template>
+
+
+<script>
+import { computed, onMounted, reactive } from "@vue/runtime-core"
+import { logger } from "../utils/Logger"
+import Pop from "../utils/Pop"
+import {postsService } from "../services/PostsService"
+import { AppState } from "../AppState"
+import { profileService } from "../services/ProfileService"
+import {useRouter} from "vue-router"
+export default {
+  setup(){
+    const router = useRouter()
+    // onMounted(async () => {
+    //   try {
+    //     await postsService.getAll()
+    //   } catch (error) {
+    //     logger.error(error)
+    //     Pop.toast("error")
+    //   }
+    // });
+    return {
+      post: computed(()=> AppState.posts),
+      account: computed(()=> AppState.account),
+
+      async create() {
+        try {
+          await postsService.create(state.editable)
+        } catch (error) {
+          logger.log(error)
+          Pop.toast("error")
+        }
+      },
+      async deletePost(id) {
+        try {
+          await postsService.deletePost(id)
+        } catch (error) {
+          logger.log(error)
+          Pop.toast("error")
+        }
+      },
+      async like(id){
+        try {
+          await postsService.like(id)
+        } catch (error) {
+          logger.log(error)
+          Pop.toast("error")
+        }
+      },
+      async linkProfile(id){
+        try {
+          if(id){
+          await profileService.getProfile(id)
+          router.push({path: '/profile/' + id})
+          }
+        } catch (error) {
+          logger.log(error)
+          Pop.toast("error")
+        }
+      },
+    }
+  }}
+</script>
+
+
+<style lang="scss" scoped>
+
+.unlike{
+  background-color: rgb(182, 107, 107);
+  border-color: rgb(235, 118, 118);
+}
+</style>

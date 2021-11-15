@@ -1,12 +1,13 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3">
-    <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
-      <div class="d-flex flex-column align-items-center">
+    <router-link class="navbar-brand d-flex" :to="{ name: 'Home', params: {id: account.id}}">
+      <div class="d-flex flex-row justify-content-center align-items-center">
         <img
           alt="logo"
-          src="../assets/img/cw-logo.png"
+          src="../assets/img/NetworkLogo.png"
           height="45"
         />
+        <h1 class="pt-1">Network</h1>
       </div>
     </router-link>
     <button
@@ -22,11 +23,9 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav me-auto">
-        <li>
-          <router-link :to="{ name: 'About' }" class="btn text-success lighten-30 selectable text-uppercase">
-            About
+        <router-link :to="{name: 'Profile', params: { id: account.id }}" class="btn text-light selectable">
+            My Profile
           </router-link>
-        </li>
       </ul>
       <span class="navbar-text">
         <button
@@ -83,6 +82,7 @@ export default {
   setup() {
     return {
       user: computed(() => AppState.user),
+      account: computed(() => AppState.account),
       async login() {
         AuthService.loginWithPopup()
       },
