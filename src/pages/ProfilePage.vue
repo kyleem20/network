@@ -27,17 +27,34 @@
 <script>
 import { computed } from "vue";
 import { AppState } from "../AppState";
-import { onMounted} from "@vue/runtime-core";
+import { onMounted, watchEffect} from "@vue/runtime-core";
 import { logger } from "../utils/Logger";
 import Pop from "../utils/Pop";
 import { profileService } from "../services/ProfileService";
 import { useRoute } from "vue-router";
 import { aPosterService } from '../services/APosterService';
+import { postsService } from '../services/PostsService';
+
 
 export default {
   name: "Profile",
   setup() {
     const route = useRoute();
+    // watchEffect(async () => {
+    //   try {
+    //     if (route.name == "Profile") {
+    //       await profileService.getProfile(route.params.id);
+    //       await postsService.getAll("?creatorId=" + route.params.id);
+    //     }
+    //   } catch (error) {
+    //     logger.error(error);
+    //     Pop.toast(error.message, "error");
+    //   }
+    // });
+    // return {
+    //   account: computed(() => AppState.account),
+    //   profile: computed(() => AppState.profile),
+    // };
     onMounted(async () => {
       try {
         await profileService.getProfile(route.params.id);

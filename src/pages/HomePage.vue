@@ -24,7 +24,7 @@
           </div>
         </div>
         <div class="col-md-3 img-fluid">
-          <div v-for="a in aPoster" :key="a.title" :aPoster="a">
+          <div v-for="a in aPoster" :key="a.id" :aPoster="a">
             <APoster />
           </div>
         </div>

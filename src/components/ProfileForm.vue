@@ -83,9 +83,7 @@ export default {
       async edit(account) {
         try {
           await accountService.edit(account);
-          Modal.getOrCreateInstance(
-            document.getElementById("ProfileForm")
-          ).hide();
+          Modal.getOrCreateInstance(document.getElementById("ProfileForm")).hide();
         } catch (error) {
           logger.error(error);
           Pop.toast("error");
