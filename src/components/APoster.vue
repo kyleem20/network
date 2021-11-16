@@ -1,13 +1,10 @@
 <template>
-    <div class=" m-3">
-      <div class="col-md-3 ">
+      <div class="col-md-12 ">
 
-          <div class="p-3 rounded text-center" v-for="a in aPoster" :key="a.tall">
-            <img class="img-fluid m-3" :src="a.tall" alt="poster" >
-            {{ads.tall}}
+          <div class="p-3 rounded text-center" >
+            <img class="img-fluid m-3" :src="aPoster.tall" alt="poster" >
           </div>
       </div>
-    </div>
 </template>
 
 
