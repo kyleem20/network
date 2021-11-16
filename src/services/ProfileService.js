@@ -13,7 +13,7 @@ async getProfile(id){
 async getProfilePostId(id){
   const res = await api.get("api/profiles/"+id+"/posts")
   logger.log(res.data)
-  AppState.profilePosts = res.data
+  AppState.profilePosts = res.data.posts
 }
 }
 

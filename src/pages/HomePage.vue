@@ -1,6 +1,12 @@
 <template>
   <div class="home container-fluid">
      <Search />
+      <div class="row text-center">
+      <div class="col-md-12">
+        <button class="btn btn-secondary selectable m-2" @click="prevPage" >Previous</button>
+        <button class="btn btn-secondary selectable m-2" @click="nextPage" >Next</button>
+      </div>
+    </div>
     <div class="row">
       <div class="col-md-12">
       <div class="text-end" v-if="account.id">
@@ -18,23 +24,17 @@
   </Modal>
     
       <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-8">
           <div v-for="p in posts" :key="p.id" :post="p">
-            <Post />
+            <Post :post="p" />
           </div>
         </div>
-        <div class="col-md-3 img-fluid">
+        <div class="col-md-4 img-fluid">
           <div v-for="a in aPoster" :key="a.id" :aPoster="a">
-            <APoster />
+            <APoster :aPoster="a"/>
           </div>
         </div>
       </div>
-    <div class="row text-center">
-      <div class="col-md-12">
-        <button class="btn btn-outline-secondary selectable me-2" @click="prevPage" >Previous</button>
-        <button class="btn btn-outline-secondary selectable ms-2" @click="nextPage" >Next</button>
-      </div>
-    </div>
 </div>
 </template>
 
@@ -45,15 +45,12 @@ import { logger } from '../utils/Logger';
 import Pop from '../utils/Pop';
 import { AppState } from '../AppState';
 import { aPosterService } from '../services/APosterService';
-import { accountService } from '../services/AccountService';
-
 export default {
   name: 'Home',
   setup(){
     let page = 1
     onMounted(async () => {
       try {
-        await accountService.getAccount();
         await postsService.getAll();
         await aPosterService.getAll();
         // logger.log(AppState.account);
@@ -73,7 +70,7 @@ export default {
       async nextPage(){
         try {
           page++
-          await postsService.page('?page=' + page)
+          await postsService.getAll('?page=' + page)
         } catch (error) {
           logger.log(error)
           Pop.toast('Cannot go to next page', "error")
@@ -83,7 +80,7 @@ export default {
       async prevPage(){
         try {
           page--
-          await postsService.page('?page=' + page)
+          await postsService.getAll('?page=' + page)
         } catch (error) {
           logger.log(error)
           Pop.toast('cannot get previous page', "error")

@@ -50,7 +50,26 @@
           v-model="account.graduated"
         />
       </div>
-
+      <label for="">GitHub</label>
+      <input
+        type="text"
+        placeholder="GitHub..."
+        name="github"
+        id="github"
+        class="form-control mb-2"
+        required
+        v-model="account.github"
+      />
+      <label for="">LinkedIn</label>
+      <input
+        type="text"
+        placeholder="LinkedIn..."
+        name="linkedin"
+        id="linkedin"
+        class="form-control mb-2"
+        required
+        v-model="account.linkedin"
+      />
       <label for="">Class Year</label>
       <input
         type="text"

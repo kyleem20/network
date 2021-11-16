@@ -1,6 +1,7 @@
 import { AppState } from "../AppState"
 import { logger } from "../utils/Logger"
 import { api } from "./AxiosService"
+import { profileService } from "./ProfileService"
 
 class PostsService {
 
@@ -12,7 +13,7 @@ class PostsService {
 
     async create(postData){
         const res = await api.post('api/posts/', postData)
-        logger.log('post Data', res.data)
+        // logger.log('post Data', res.data)der f4cx 
         AppState.posts.unshift(res.data)
     }
 

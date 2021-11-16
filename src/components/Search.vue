@@ -1,18 +1,18 @@
 <template>
     <div class="search row px-5">
     <div class="col-12 m-2">
-      <form @submit.prevent="searchPosts" class="input-group">
+      <!-- <form @submit.prevent="searchPosts" class="input-group"> -->
         <input
           @keypress="searchPosts"
           v-model="query"
           class="form-control"
-          placeholder="search posts"
+          placeholder="Search Posts"
           type="text"
-          name=""
+          name="search"
           id=""
         />
-        <button class="btn btn-outline-primary">Search</button>
-      </form>
+        <!-- <button class="btn btn-outline-primary">Search</button> -->
+      <!-- </form> -->
     </div>
   </div>
 </template>
@@ -34,7 +34,7 @@ export default {
         posts: computed(() => AppState.posts),
       async searchPosts(){
         try {
-          await postsService.searchPosts("?query=" + query.value);
+          await postsService.getAll("?query=" + query.value);
         } catch (error) {
           logger.error(error);
           Pop.toast("search error", "error")
